@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Ajout de Font Awesome pour les icônes -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      /* --- Styles Généraux --- */
+      :root {
+        --primary-color: #3498db; /* Un bleu moderne */
+        --secondary-color: #2c3e50; /* Un gris foncé/bleu */
+        --background-color: #1c1c1c; /* Fond très sombre */
+        --text-color: #ecf0f1; /* Texte blanc cassé */
+        --card-bg-color: #2a2a2a; /* Fond pour les cartes */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 0 20px;
+        overflow: hidden;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      /* --- Bouton Menu Hamburger --- */
+      .menu-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1100;
+        background: var(--secondary-color);
+        border: none;
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      /* --- Barre Latérale Sociale --- */
+      .social-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 280px;
+        background: var(--secondary-color);
+        padding: 20px;
+        z-index: 1200;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .social-sidebar.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-header {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 30px;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      .social-links {
+        list-style: none;
+        width: 100%;
+      }
+
+      .social-links li {
+        margin: 20px 0;
+      }
+
+      .social-links a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .social-links a:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .social-links a i {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        width: 30px; /* Pour aligner le texte */
+        text-align: center;
+      }
+
+      /* --- Barre de Navigation --- */
+      .navbar {
+        background: rgba(44, 62, 80, 0.85);
+        backdrop-filter: blur(10px);
+        color: #fff;
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        transition: background 0.3s;
+      }
+
+      .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .navbar .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .navbar ul {
+        display: flex;
+        list-style: none;
+      }
+
+      .navbar ul li a {
+        color: #fff;
+        padding: 0.75rem;
+        margin: 0 0.5rem;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .navbar ul li a:hover {
+        color: var(--primary-color);
+      }
+
+      /* --- Section d'accueil (Hero) --- */
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #fff;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 99%;
+        height: 150%;
+        background-image: url("bcd.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(0.4);
+        z-index: -1;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+      }
+
+      .hero-content p {
+        font-size: 2rem;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      /* --- Animation de texte --- */
+      .typed-text {
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .cursor {
+        display: inline-block;
+        background-color: var(--primary-color);
+        margin-left: 0.1rem;
+        width: 3px;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0% {
+          background-color: var(--primary-color);
+        }
+        49% {
+          background-color: var(--primary-color);
+        }
+        50% {
+          background-color: transparent;
+        }
+        99% {
+          background-color: transparent;
+        }
+        100% {
+          background-color: var(--primary-color);
+        }
+      }
+
+      /* --- Sections (À Propos, Services, Projets) --- */
+      #about,
+      #services,
+      #projects,
+      #contact {
+        background-color: var(--background-color);
+      }
+
+      #about {
+        border-bottom: 1px solid var(--card-bg-color);
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: var(--primary-color);
+      }
+
+      /* --- Section Services --- */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .service-card {
+        background: var(--card-bg-color);
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .service-card .icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      /* --- Section Projets --- */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .project-card {
+        background: var(--card-bg-color);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .project-content {
+        padding: 20px;
+      }
+
+      .project-content a {
+        display: inline-block;
+        margin-top: 15px;
+        text-decoration: none;
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      /* --- Section Contact --- */
+      .contact-form {
+        max-width: 700px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #555;
+        background-color: var(--card-bg-color);
+        color: var(--text-color);
+        font-size: 1rem;
+      }
+
+      .contact-form input:focus,
+      .contact-form textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+
+      .contact-form .name-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .btn-submit {
+        padding: 15px 30px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        width: 100%;
+      }
+
+      .btn-submit:hover {
+        background-color: #2980b9;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        text-align: center;
+        padding: 20px;
+        background: var(--secondary-color);
+      }
+
+      /* --- Responsive --- */
+      @media (max-width: 768px) {
+        .navbar .container {
+          flex-direction: column;
+        }
+        .navbar ul {
+          margin-top: 10px;
+          flex-direction: column;
+          text-align: center;
+        }
+        .navbar ul li {
+          margin-bottom: 5px;
+        }
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+        .hero-content p {
+          font-size: 1.5rem;
+        }
+        .contact-form .name-group {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bouton Menu Hamburger -->
+    <button id="menu-toggle" class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Barre Latérale Sociale -->
+    <aside id="social-sidebar" class="social-sidebar">
+      <div class="sidebar-header">
+        <button id="close-sidebar-btn" class="close-btn">&times;</button>
+      </div>
+      <ul class="social-links">
+        <li>
+          <!-- EXPLICATION : Remplacez '#' par le lien de votre profil Facebook -->
+          <a href="https://www.facebook.com/Chris't.Bcd.Dialu" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+            <span>Facebook</span>
+          </a>
+        </li>
+        <li>
+          <!-- EXPLICATION : Remplacez '#' par le lien de votre profil LinkedIn -->
+          <a
+            href="http://www.linkedin.com/in/christ-dialu-batoba-0b4b61264"
+            target="_blank"
+          >
+            <i class="fab fa-linkedin-in"></i>
+            <span>LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <!-- EXPLICATION : Remplacez '#' par votre lien WhatsApp -->
+          <a href="https://wa.me/243896872708" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Barre de Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="#hero" class="logo"
+          >Brilliant Creatives Devices Technologies</a
+        >
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#services">Mes services</a></li>
+          <li><a href="#projects">Mes projets</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Le reste de mon contenu HTML reste identique... -->
+    <!-- Section d'Accueil -->
+    <section id="hero" class="hero">
+      <div class="hero-content">
+        <h1>Je suis <span id="typed-name" class="typed-text"></span></h1>
+        <p>
+          Et je suis <span id="typed-role" class="typed-text"></span
+          ><span class="cursor"></span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Section À Propos -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">À Propos de Moi</h2>
+        <p style="text-align: center; max-width: 800px; margin: auto">
+          Christ Dialungana Batoba est mon nom complet ! Passionné par
+          l'entrepreneuriat d'Intelligence Artificielle. Elève ingénieur en
+          Génie Informatique, je possède des compétences clés en programmation
+          avec C++, Python et JavaScript, et je suis motivé d'en apprendre
+          toujours plus, j'adore travailler en équipe, je suis solidaire,
+          m'adapte facilement, authentique et engageant !
+        </p>
+      </div>
+    </section>
+
+    <!-- Section Services -->
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title">Mes Services</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="icon">💻</div>
+            <h3>Développement Web</h3>
+            <p>
+              Création de sites web modernes, réactifs et performants, du
+              front-end au back-end.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="icon">📱</div>
+            <h3>Développement Mobile</h3>
+            <p>
+              Conception et développement d'applications mobiles natives ou
+              hybrides pour iOS et Android.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="icon">🚀</div>
+            <h3>Entrepreneuriat</h3>
+            <p>
+              Transformation d'idées en projets concrets et viables et création
+              des solutions technologiques innovantes et durables.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Mes Projets</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <img
+              src="https://placehold.co/600x400/3498db/ffffff?text=Projet+1"
+              alt="greencook.jpg"
+            />
+            <div class="project-content">
+              <h3 style="text-align: center">
+                GreenCook, le réchaud autonome à induction
+              </h3>
+              <p>
+                C’est un réchaud autonome à induction, intelligent et optimisé
+                grâce à l’IA auquel sont intégrées des batteries rechargeables
+                alimenté principalement par l’énergie solaire, qui se trouve
+                etre une énergie propre et inépuisable, avec possibilité de
+                recharge par secteur électrique.
+              </p>
+              <h1 style="text-align: center"> <a href="greencook.jpeg" target="_blank">Voir le projet</a> </h1>
+            </div>
+          </div>
+          <div class="project-card">
+            <img
+              src="https://placehold.co/600x400/2ecc71/ffffff?text=Projet+2"
+              url="logo.jpg"
+            />
+            <div class="project-content">
+              <h3 style="text-align: center">Gerab</h3>
+
+              <p>
+                une application mobile qui répond au problème croissant de la
+                "fatigue des abonnements". Elle permet aux utilisateurs de
+                centraliser, suivre et optimiser leurs dépenses liées aux
+                services numériques (Netflix, Spotify, etc.).
+              </p>
+              <h1 style="text-align: center"><a href="logologo.jpg" target="_blank"> Voir le projet</a></h1>
+            </div>
+          </div>
+          <div class="project-card">
+            <img
+              src="https://placehold.co/600x400/e74c3c/ffffff?text=Projet+3"
+              url="cuisafrica.jpg"
+            />
+            <div class="project-content">
+              <h3 style="text-align: center">Cuisine AfriMobile</h3>
+              <p>
+                Une application innovante qui rassemble la majorité des recettes
+                africaines par pays pour permettre que les gens puissent se
+                réferer et apprendre à cuisiner les plats d'autres pays.
+              </p>
+              <h1 style="text-align: center"> <a href="protot.jpg" target="_blank"> Voir le projet</a> </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contactez-moi</h2>
+        <form class="contact-form" action="https://formspree.io/f/xwpbgodl"method="POST"></form>
+          <div class="name-group">
+            <div class="form-group">
+              <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" name="Prénom" required />
+            </div>
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input type="text" id="nom" name="Nom" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="Email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="Message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Envoyer</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Christ Dialu. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Le script JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- Animation de texte (typing effect) ---
+        const nameElement = document.getElementById("typed-name");
+        const roleElement = document.getElementById("typed-role");
+
+        const name = "Christ Dialungana Batoba"; // <--
+        const roles = [
+          "CEO de BCD Tech",
+          "Membre actif de LYX Developper Community",
+          "Développeur Web",
+          "Développeur Mobile",
+          "Entrepreneur",
+          "Violoniste",
+          
+        ];
+
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 150;
+        let erasingSpeed = 100;
+        let delayBetweenRoles = 2000;
+
+        function typeName() {
+          if (charIndex < name.length) {
+            nameElement.textContent += name.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeName, typingSpeed);
+          } else {
+            charIndex = 0; // Réinitialiser pour les rôles
+            setTimeout(typeRole, 500);
+          }
+        }
+
+        function typeRole() {
+          const currentRole = roles[roleIndex];
+          if (!isDeleting && charIndex < currentRole.length) {
+            roleElement.textContent += currentRole.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeRole, typingSpeed);
+          } else if (isDeleting && charIndex > 0) {
+            roleElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(typeRole, erasingSpeed);
+          } else if (!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            setTimeout(typeRole, delayBetweenRoles);
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            setTimeout(typeRole, 500);
+          }
+        }
+
+        typeName();
+
+        // --- Logique pour la barre latérale sociale ---
+        const menuToggle = document.getElementById("menu-toggle");
+        const socialSidebar = document.getElementById("social-sidebar");
+        const closeBtn = document.getElementById("close-sidebar-btn");
+
+        // Ouvrir la barre latérale
+        menuToggle.addEventListener("click", () => {
+          socialSidebar.classList.add("active");
+        });
+
+        // Fermer la barre latérale
+        closeBtn.addEventListener("click", () => {
+          socialSidebar.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
